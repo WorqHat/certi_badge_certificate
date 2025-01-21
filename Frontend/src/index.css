@@ -1,73 +1,311 @@
-/* :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
-
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
-}
-
-body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
-}
-
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
-}
-
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
-}
-
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
-} */
-
-/* src/index.css */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 0 0% 3.9%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 3.9%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 3.9%;
+
+    --primary: 0 0% 9%;
+    --primary-foreground: 0 0% 98%;
+
+    --secondary: 0 0% 96.1%;
+    --secondary-foreground: 0 0% 9%;
+
+    --muted: 0 0% 96.1%;
+    --muted-foreground: 0 0% 45.1%;
+
+    --accent: 0 0% 96.1%;
+    --accent-foreground: 0 0% 9%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 0 0% 89.8%;
+    --input: 0 0% 89.8%;
+    --ring: 0 0% 3.9%;
+
+    --radius: 0.5rem;
+
+    --navigation-height: 3.5rem;
+    --color-one: #fbadce;
+    --color-two: #fe8bbb;
+    --color-three: #9e7aff;
+  }
+
+  .dark {
+    --background: 0 0% 3.9%;
+    --foreground: 0 0% 98%;
+
+    --card: 0 0% 3.9%;
+    --card-foreground: 0 0% 98%;
+
+    --popover: 0 0% 3.9%;
+    --popover-foreground: 0 0% 98%;
+
+    --primary: 0 0% 98%;
+    --primary-foreground: 0 0% 9%;
+
+    --secondary: 0 0% 14.9%;
+    --secondary-foreground: 0 0% 98%;
+
+    --muted: 0 0% 14.9%;
+    --muted-foreground: 0 0% 63.9%;
+
+    --accent: 0 0% 14.9%;
+    --accent-foreground: 0 0% 98%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 0 0% 14.9%;
+    --input: 0 0% 14.9%;
+    --ring: 0 0% 83.1%;
+    color: #cacaca64;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+@layer utilities {
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  video::cue {
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    font-size: 16px;
+  }
+}
+
+[contenteditable]:empty:before {
+  content: attr(data-placeholder);
+  color: grey;
+}
+
+@layer utilities {
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  video::cue {
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    font-size: 16px;
+  }
+}
+
+[contenteditable]:empty:before {
+  content: attr(data-placeholder);
+  color: grey;
+}
+
+.thread-viewport > [data-radix-scroll-area-content] {
+  @apply flex flex-col items-center self-stretch bg-inherit;
+}
+
+.popup-border-animation {
+  --angle: 0deg;
+  border: 3px solid;
+  border-image: linear-gradient(var(--angle, 0deg), #12c2e9, #c471ed, #f64f59) 1;
+  animation: rotate 2s linear infinite;
+}
+
+.thin-scrollbar::-webkit-scrollbar {
+  width: 6px; /* Width of the scrollbar */
+}
+
+.thin-scrollbar::-webkit-scrollbar-track {
+  background: transparent; /* Transparent background */
+}
+
+.thin-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #acacac4f; /* Thumb color: neutral-600 */
+  border-radius: 9999px; /* Fully rounded ends */
+}
+
+.dark .animated-gradient {
+  background: linear-gradient(90deg, #595cff, #c6f8ff, #595cff);
+  background-size: 200% 200%;
+  animation: gradientShift 6s ease infinite;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: inline;
+}
+
+/* Apply a different animated gradient for dark mode */
+.animated-gradient {
+  background: linear-gradient(90deg, #411cd6, #ec2dfd, #411cd6);
+  background-size: 200% 200%;
+  animation: gradientShift 6s ease infinite;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: inline;
+}
+
+/* Custom Scrollbar Styles */
+::-webkit-scrollbar {
+  width: 8px; /* Width of the scrollbar */
+  height: 8px; /* Height of the scrollbar */
+}
+
+::-webkit-scrollbar-track {
+  background: transparent; /* Background of the scrollbar track */
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.3); /* Color of the scrollbar thumb */
+  border-radius: 10px; /* Rounded corners for the thumb */
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.5); /* Darker color on hover */
+}
+
+::-webkit-scrollbar-corner {
+  background: transparent; /* Background for the corner */
+}
+
+/* For Firefox */
+* {
+  scrollbar-width: thin; /* Use thin scrollbar */
+  scrollbar-color: rgba(0, 0, 0, 0.3) transparent; /* Thumb color and track color */
+}
+
+/* For Edge and IE */
+@supports (-ms-overflow-style: auto) {
+  * {
+    -ms-overflow-style: -ms-autohiding-scrollbar; /* Use autohiding scrollbar */
+  }
+}
+
+.thin-scrollbar::-webkit-scrollbar {
+  width: 6px; /* Width of the scrollbar */
+}
+.thin-scrollbar::-webkit-scrollbar-track {
+  background: transparent; /* Transparent background */
+}
+.thin-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #acacac4f; /* Thumb color: neutral-600 */
+  border-radius: 9999px; /* Fully rounded ends */
+}
+/* Custom Scrollbar Styles */
+::-webkit-scrollbar {
+  width: 8px; /* Width of the scrollbar */
+  height: 8px; /* Height of the scrollbar */
+}
+::-webkit-scrollbar-track {
+  background: transparent; /* Background of the scrollbar track */
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.3); /* Color of the scrollbar thumb */
+  border-radius: 10px; /* Rounded corners for the thumb */
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.5); /* Darker color on hover */
+}
+::-webkit-scrollbar-corner {
+  background: transparent; /* Background for the corner */
+}
+/* For Firefox */
+* {
+  scrollbar-width: thin; /* Use thin scrollbar */
+  scrollbar-color: rgba(0, 0, 0, 0.3) transparent; /* Thumb color and track color */
+}
+/* For Edge and IE */
+@supports (-ms-overflow-style: auto) {
+  * {
+    -ms-overflow-style: -ms-autohiding-scrollbar; /* Use autohiding scrollbar */
+  }
+}
+.custom-unordered-list {
+  list-style-type: disc !important;
+  padding-left: 1.5rem !important;
+  margin: 0 !important;
+}
+.custom-ordered-list {
+  list-style-type: decimal !important;
+  padding-left: 1.5rem !important;
+  margin: 0 !important;
+}
+.custom-list-item {
+  margin: 0 !important;
+  padding: 0.5rem 0 !important;
+  list-style-position: outside !important;
+  display: list-item !important;
+}
+.custom-list-item strong,
+.custom-list-item b {
+  margin: 0 !important;
+  padding: 0 !important;
+  font-weight: bold !important;
+}
+.custom-paragraph {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+li {
+  list-style: inherit !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+.custom-table {
+  width: 100% !important;
+  border-collapse: separate !important;
+  border-spacing: 0 !important;
+  border: 1px solid #717171 !important;
+  border-radius: 10px !important;
+  overflow: hidden;
+  margin: 1rem 0 !important;
+  table-layout: fixed !important;
+}
+.custom-table th {
+  border: 1px solid #717171 !important;
+  padding: 8px !important;
+  background-color: #f2f2f200 !important;
+  text-align: left !important;
+  font-weight: bold !important;
+}
+.custom-table td {
+  border: 1px solid #717171 !important;
+  padding: 8px !important;
+  text-align: left !important;
+}
+
+@keyframes shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-4px);
+  }
+  75% {
+    transform: translateX(4px);
+  }
+}
+
+.animate-shake {
+  animation: shake 0.5s ease-in-out;
+}
