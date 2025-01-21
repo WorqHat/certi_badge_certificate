@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { SquarePlus, Trash2 } from "lucide-react";
 
 type UserDetails = {
   name: string;
@@ -73,7 +74,12 @@ const AdminHome = () => {
             >
               Upload CSV
             </Label>
-            <Input type="file" id="upload-user-csv" className="hidden" />
+            <Input
+              type="file"
+              id="upload-user-csv"
+              className="hidden"
+              accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+            />
           </div>
         </div>
         <div className="grid grid-cols-2 gap-6 w-full max-w-2xl">
@@ -107,10 +113,10 @@ const AdminHome = () => {
                 <div className="col-span-1">
                   <Button
                     variant="destructive"
-                    className="mt-6"
+                    className="mt-8"
                     onClick={() => deleteUser(index)}
                   >
-                    Delete
+                    <Trash2 />
                   </Button>
                 </div>
               </div>
@@ -122,7 +128,7 @@ const AdminHome = () => {
               className="w-full mt-4 shadow-md"
               onClick={addNewUser}
             >
-              +
+              <SquarePlus />
             </Button>
           </div>
           <div className="col-span-2">
