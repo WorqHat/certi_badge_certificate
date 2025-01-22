@@ -6,6 +6,7 @@ import { SquarePlus, Trash2 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { certificateProps, UserDetails } from "@/types/participant";
 import { Textarea } from "@/components/ui/textarea";
+import { v4 as uuidv4 } from "uuid";
 
 const AdminHome = () => {
   const [userDetails, setUserDetails] = useState<UserDetails[]>([
@@ -16,7 +17,6 @@ const AdminHome = () => {
   const [context, setContext] = useState(
     "has awarded for exceptional performance in this competition"
   );
-
   const navigate = useNavigate();
 
   const today = new Date();
@@ -57,6 +57,7 @@ const AdminHome = () => {
       context: context,
       issueDate: issueDate,
       expiryDate: expiryDate,
+      certificateId: uuidv4(),
     };
     navigate("/preview", {
       state: {

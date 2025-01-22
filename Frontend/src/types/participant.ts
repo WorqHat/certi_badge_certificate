@@ -50,6 +50,7 @@ export type certificateProps = {
   context: string;
   issueDate: string;
   expiryDate: string;
+  certificateId: string;
 };
 
 export interface CertificateProps {
