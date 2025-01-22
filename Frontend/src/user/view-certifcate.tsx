@@ -1,9 +1,12 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Certificate from "@/Certificate/certificate";
 import { useParams } from "react-router-dom";
 import { getCertificateDetails } from "@/database/storeEvent";
 import Loader from "@/Loader/loader";
 import { Button } from "@/components/ui/button";
+import worqhatlogo from "@/assets/images/logo-blue.png";
+import html2canvas from "html2canvas";
+import jsPDF from "jspdf";
 
 const ViewCertificate = () => {
   const { certificateId } = useParams(); // Destructure the certificate ID
@@ -17,6 +20,7 @@ const ViewCertificate = () => {
   });
   const [participant, setParticipant] = useState({ email: "", name: "" });
   const [loading, setLoading] = useState(false);
+  const certificateRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const fetchCertificateDetails = async () => {
@@ -56,6 +60,29 @@ const ViewCertificate = () => {
     return <div>Loading certificate details...</div>;
   }
 
+  const downloadCertificate = async () => {
+    if (certificateRef.current) {
+      // Convert Certificate to Canvas
+      const canvas = await html2canvas(certificateRef.current, {
+        useCORS: true, // To handle cross-origin images
+      });
+
+      // Get Canvas Dimensions
+      const imgData = canvas.toDataURL("image/png");
+      const canvasWidth = canvas.width;
+      const canvasHeight = canvas.height;
+
+      // Initialize jsPDF in Landscape Mode with Dynamic Size
+      const pdf = new jsPDF("landscape", "px", [canvasWidth, canvasHeight]);
+
+      // Add Canvas Image to PDF
+      pdf.addImage(imgData, "PNG", 0, 0, canvasWidth, canvasHeight);
+
+      // Save PDF
+      pdf.save("certificate.pdf");
+    }
+  };
+
   return (
     <div>
       {loading ? (
@@ -63,22 +90,33 @@ const ViewCertificate = () => {
       ) : (
         <div className="h-full bg-neutral-50 border rounded-lg">
           <div className="flex flex-col items-center justify-center h-full pt-12 rounded-lg">
-            <h1 className="text-2xl font-bold mb-8">View Certificate</h1>
+            <h1 className="text-2xl font-bold mb-4">
+              Certificate of Exellence
+            </h1>
+            <Button className="mb-4 bg-blue-950" onClick={downloadCertificate}>
+              {" "}
+              Download Certificate
+            </Button>
           </div>
-          <Certificate
-            participant={participant}
-            certificateDetails={certificateDetails}
-          />
+          <div>
+            <Certificate
+              certificateRef={certificateRef}
+              participant={participant}
+              certificateDetails={certificateDetails}
+            />
+          </div>
           <div className="w-full flex mt-12">
             <div className="w-[500px] ">
               <div className="bg-white border m-2 rounded-lg">
                 <h1 className="flex justify-start items-start ml-4 mt-2 text-blue-400 text-lg font-semibold">
                   Issued To
                 </h1>
-                <h2 className="flex justify-center items-center text-xl mt-2">
+                <h2 className="flex justify-center items-center text-xl mt-2 border rounded-lg mx-4 py-2">
                   {participant.name}
                 </h2>
-                <p className="mt-4 mb-2">Want to report typo or mistake</p>
+                <p className="mt-4 mb-2 ml-4 flex justify-start ">
+                  Want to report typo or mistake
+                </p>
                 <a
                   href="https://worqhat.com/contact-us"
                   className="text-blue-500 flex justify-start items-start ml-4 mb-4 w-24"
@@ -107,7 +145,9 @@ const ViewCertificate = () => {
               </div>
             </div>
 
-            <div className="w-full bg-white border m-2 rounded-lg">WorqHat</div>
+            <div className="w-full bg-white border m-2 rounded-lg">
+              <img src={worqhatlogo} alt="worqhat logo" />
+            </div>
           </div>
         </div>
       )}

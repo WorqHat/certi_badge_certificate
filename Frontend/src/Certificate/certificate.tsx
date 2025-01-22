@@ -5,12 +5,13 @@ import { v4 as uuidv4 } from "uuid";
 import worqhaticon from "@/assets/icon/worqhat-icon.png";
 
 const Certificate: React.FC<CertificateProps> = ({
+  certificateRef,
   participant,
   certificateDetails,
 }) => {
   return (
     <div className="certificate-container ">
-      <div className="certificate space-y-4">
+      <div className="certificate space-y-4" ref={certificateRef}>
         <div className="certificate-header">
           <img
             src={worqhaticon}

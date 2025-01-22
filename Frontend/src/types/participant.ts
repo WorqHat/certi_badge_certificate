@@ -54,6 +54,7 @@ export type certificateProps = {
 };
 
 export interface CertificateProps {
+  certificateRef?: React.RefObject<HTMLDivElement>;
   participant: UserDetails;
   certificateDetails: certificateProps;
 }
