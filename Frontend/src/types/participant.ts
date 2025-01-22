@@ -38,3 +38,21 @@ export interface UserData {
   showQuestion?: boolean;
   totalScore?: number;
 }
+
+export type UserDetails = {
+  name: string;
+  email: string;
+};
+
+export type certificateProps = {
+  title: string;
+  subtitle: string;
+  context: string;
+  issueDate: string;
+  expiryDate: string;
+};
+
+export interface CertificateProps {
+  participant: UserDetails;
+  certificateDetails: certificateProps;
+}

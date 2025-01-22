@@ -3,16 +3,32 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { SquarePlus, Trash2 } from "lucide-react";
-
-type UserDetails = {
-  name: string;
-  email: string;
-};
+import { useNavigate } from "react-router-dom";
+import { certificateProps, UserDetails } from "@/types/participant";
+import { Textarea } from "@/components/ui/textarea";
 
 const AdminHome = () => {
   const [userDetails, setUserDetails] = useState<UserDetails[]>([
     { name: "", email: "" },
   ]);
+  const [title, setTitle] = useState("Certificate of Achievement");
+  const [subtitle, setSubTitle] = useState("This is to certify that");
+  const [context, setContext] = useState(
+    "has awarded for exceptional performance in this competition"
+  );
+
+  const navigate = useNavigate();
+
+  const today = new Date();
+  const sixMonthsLater = new Date();
+  sixMonthsLater.setMonth(today.getMonth() + 6);
+
+  const formatDate = (date: Date) => date.toISOString().split("T")[0]; // Format as YYYY-MM-DD
+
+  const [issueDate, setIssueDate] = useState<string>(formatDate(today)); // Default to today
+  const [expiryDate, setExpiryDate] = useState<string>(
+    formatDate(sixMonthsLater)
+  ); // Default to 6 months later
 
   const addNewUser = () => {
     setUserDetails([...userDetails, { name: "", email: "" }]);
@@ -35,33 +51,80 @@ const AdminHome = () => {
 
   const handleSubmit = () => {
     console.log("User Details:", userDetails);
+    const certificateDetails: certificateProps = {
+      title: title,
+      subtitle: subtitle,
+      context: context,
+      issueDate: issueDate,
+      expiryDate: expiryDate,
+    };
+    navigate("/preview", {
+      state: {
+        participants: userDetails,
+        certificateDetails,
+      },
+    });
     // Add your submission logic here
   };
 
   return (
-    <div className="h-full">
-      <div className="flex flex-col items-center justify-center h-full p-12 bg-neutral-100 rounded-lg">
+    <div className="h-full bg-neutral-50 border rounded-lg ">
+      <div className="flex flex-col items-center justify-center h-full p-12 rounded-lg">
         <h1 className="text-2xl font-bold mb-8">Add Certificate Details</h1>
         <div className="grid grid-cols-2 gap-6 w-full max-w-2xl">
           <div className="space-y-2">
             <Label htmlFor="issue-date">Issue Date</Label>
-            <Input type="date" id="issue-date" />
+            <Input
+              type="date"
+              id="issue-date"
+              value={issueDate}
+              className="cursor-pointer"
+              onChange={(e) => setIssueDate(e.target.value)}
+            />
           </div>
           <div className="space-y-2">
             <Label htmlFor="expiry-date">Expiry Date</Label>
-            <Input type="date" id="expiry-date" />
-          </div>
-          <div className="space-y-2 ">
-            <Label htmlFor="context">Context</Label>
-            <Input type="text" id="context" placeholder="Enter context" />
+            <Input
+              type="date"
+              id="expiry-date"
+              value={expiryDate}
+              className="cursor-pointer"
+              onChange={(e) => setExpiryDate(e.target.value)}
+            />
           </div>
           <div className="space-y-2 ">
             <Label htmlFor="title">Title</Label>
-            <Input type="text" id="title" placeholder="Enter title" />
+            <Input
+              type="text"
+              id="title"
+              placeholder="Enter title"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+            />
+          </div>
+          <div className="space-y-2 ">
+            <Label htmlFor="title">Sub Title</Label>
+            <Input
+              type="text"
+              id="title"
+              placeholder="Enter title"
+              value={subtitle}
+              onChange={(e) => setSubTitle(e.target.value)}
+            />
+          </div>
+
+          <div className="space-y-2 col-span-2">
+            <Label htmlFor="context">Context</Label>
+            <Textarea
+              id="context"
+              placeholder="Enter context"
+              value={context}
+              onChange={(e) => setContext(e.target.value)}
+            />
           </div>
         </div>
       </div>
-      <div className="flex flex-col items-center justify-center h-full p-12 bg-neutral-100 rounded-lg">
+      <div className="flex flex-col items-center justify-center h-full p-12 rounded-lg">
         <div className="flex justify-between items-center space-x-96 border-b pb-12">
           <div>
             <h1 className="text-2xl font-bold ">Add User Details</h1>
@@ -137,7 +200,7 @@ const AdminHome = () => {
               className="w-full mt-4"
               onClick={handleSubmit}
             >
-              Submit
+              preview
             </Button>
           </div>
         </div>

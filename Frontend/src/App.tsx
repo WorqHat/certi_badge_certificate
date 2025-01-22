@@ -6,6 +6,7 @@ import Login from "./Authentication/login";
 import SignUp from "./Authentication/signup";
 import withAuthCheck from "./functions/checkAuth";
 import NotFound from "./components/404";
+import Preview from "./admin/Preview";
 
 const AppRoutes = () => {
   const ProtectedAdminHome = withAuthCheck(({ userRole }) => {
@@ -22,9 +23,17 @@ const AppRoutes = () => {
     }
   });
 
+  const ProtectedPreview = withAuthCheck(({ userRole }) => {
+    if (userRole === "admin") return <Preview />;
+    else {
+      return <NotFound />;
+    }
+  });
+
   return (
     <Routes>
       <Route path="/admin-home" element={<ProtectedAdminHome />} />
+      <Route path="/preview" element={<ProtectedPreview />} />
       <Route path="/student-home" element={<ProtectedStudentHome />} />
       <Route path="/login" element={<Login />} />
       <Route path="/signup" element={<SignUp />} />
