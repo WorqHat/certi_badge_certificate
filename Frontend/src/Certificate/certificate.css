@@ -7,7 +7,7 @@
 }
 
 .certificate {
-  width: 600px;
+  width: 470px;
   border: 2px solid #333;
   padding: 20px;
   background: #fff;
@@ -15,12 +15,16 @@
   border-radius: 8px;
   text-align: center;
   font-family: "Arial", sans-serif;
+  background-image: url("../assets/images/certificate-bg.png");
+  background-size: contain; /* Adjust to cover the entire area */
+  background-repeat: no-repeat; /* Prevent the image from repeating */
+  background-position: center; /* Center the image */
 }
 
 .certificate-header h1 {
   font-size: 24px;
   margin: 0;
-  color: #4a90e2;
+  color: #172554;
 }
 
 .certificate-header p {

@@ -1,7 +1,7 @@
 import React from "react";
 import "./certificate.css";
 import { CertificateProps } from "@/types/participant";
-import worqhaticon from "@/assets/icon/worqhat-icon.png";
+import worqhatlogo from "@/assets/images/logo-blue.png";
 
 const Certificate: React.FC<CertificateProps> = ({
   certificateRef,
@@ -12,11 +12,9 @@ const Certificate: React.FC<CertificateProps> = ({
     <div className="certificate-container ">
       <div className="certificate space-y-4" ref={certificateRef}>
         <div className="certificate-header">
-          <img
-            src={worqhaticon}
-            alt="WorqHat"
-            className="w-8 absolute h-auto"
-          />
+          <div className="flex justify-center items-center">
+            <img src={worqhatlogo} alt="WorqHat" className="w-24 h-auto" />
+          </div>
           <h1>{certificateDetails.title}</h1>
           <p>{certificateDetails.subtitle}</p>
         </div>
@@ -29,7 +27,7 @@ const Certificate: React.FC<CertificateProps> = ({
           <p>Expiry Date: {certificateDetails.expiryDate}</p>
         </div>
         <p className="text-xs text-neutral-400">
-          {certificateDetails.certificateId }
+          {certificateDetails.certificateId}
         </p>
       </div>
     </div>
@@ -37,3 +35,5 @@ const Certificate: React.FC<CertificateProps> = ({
 };
 
 export default Certificate;
+
+//  https://discord.com/invite/KHh9mguKBx
