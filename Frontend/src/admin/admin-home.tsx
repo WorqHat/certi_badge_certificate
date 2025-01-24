@@ -14,9 +14,15 @@ const AdminHome = () => {
   ]);
   const [title, setTitle] = useState("Certificate of Achievement");
   const [subtitle, setSubTitle] = useState("This is to certify that");
+  const [event, setEvent] = useState("Hackathon");
+  const [eventDetails, setEventDetails] = useState(
+    "Hackathon conducted on the theme of Healthcare"
+  );
+  const [skills, setSkills] = useState("HealthCare AI");
   const [context, setContext] = useState(
     "has awarded for exceptional performance in this competition"
   );
+
   const navigate = useNavigate();
 
   const today = new Date();
@@ -57,6 +63,9 @@ const AdminHome = () => {
       context: context,
       issueDate: issueDate,
       expiryDate: expiryDate,
+      event: event,
+      eventDetails: eventDetails,
+      skills: skills,
       certificateId: uuidv4(),
     };
     navigate("/preview", {
@@ -115,12 +124,44 @@ const AdminHome = () => {
           </div>
 
           <div className="space-y-2 col-span-2">
-            <Label htmlFor="context">Context</Label>
+            <Label htmlFor="context">Certificate Context</Label>
             <Textarea
               id="context"
               placeholder="Enter context"
               value={context}
               onChange={(e) => setContext(e.target.value)}
+            />
+          </div>
+
+          <div className="space-y-2 ">
+            <Label htmlFor="title">Event</Label>
+            <Input
+              type="text"
+              id="title"
+              placeholder="Enter title"
+              value={event}
+              onChange={(e) => setEvent(e.target.value)}
+            />
+          </div>
+
+          <div className="space-y-2 ">
+            <Label htmlFor="title">Skills / Project</Label>
+            <Input
+              type="text"
+              id="title"
+              placeholder="Enter title"
+              value={skills}
+              onChange={(e) => setSkills(e.target.value)}
+            />
+          </div>
+
+          <div className="space-y-2 col-span-2">
+            <Label htmlFor="context">Event Details</Label>
+            <Textarea
+              id="context"
+              placeholder="Enter context"
+              value={eventDetails}
+              onChange={(e) => setEventDetails(e.target.value)}
             />
           </div>
         </div>

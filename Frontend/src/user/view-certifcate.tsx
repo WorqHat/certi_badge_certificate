@@ -7,17 +7,12 @@ import { Button } from "@/components/ui/button";
 import worqhatlogo from "@/assets/images/logo-blue.png";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
+import { certificateProps } from "@/types/participant";
 
 const ViewCertificate = () => {
   const { certificateId } = useParams(); // Destructure the certificate ID
-  const [certificateDetails, setCertificateDetails] = useState({
-    title: "",
-    subtitle: "",
-    issueDate: "",
-    expiryDate: "",
-    context: "",
-    certificateId: "",
-  });
+  const [certificateDetails, setCertificateDetails] =
+    useState<certificateProps>();
   const [participant, setParticipant] = useState({ email: "", name: "" });
   const [loading, setLoading] = useState(false);
   const certificateRef = useRef<HTMLDivElement>(null);
@@ -45,6 +40,9 @@ const ViewCertificate = () => {
           issueDate: details.certificateIssueDate,
           expiryDate: details.certificateExpiryDate,
           context: details.certificateContext,
+          event: details.eventName,
+          eventDetails: details.eventDetails,
+          skills: details.skills,
           certificateId: details.awardId,
         });
       } else {
@@ -57,7 +55,7 @@ const ViewCertificate = () => {
   }, [certificateId]);
 
   if (!certificateDetails || !participant) {
-    return <div>Loading certificate details...</div>;
+    return <div>Loading your Achievement...</div>;
   }
 
   const downloadCertificate = async () => {
@@ -89,7 +87,8 @@ const ViewCertificate = () => {
         <Loader />
       ) : (
         <div className="h-full bg-neutral-50 border rounded-lg">
-          <div className="flex flex-col items-center justify-center h-full pt-12 rounded-lg">
+          <div className="flex flex-col items-center justify-center h-full  rounded-lg">
+            <img src={worqhatlogo} alt="worqhat logo" className="h-24 mb-2" />
             <h1 className="text-2xl font-bold mb-4">
               Certificate of Exellence
             </h1>
@@ -105,10 +104,10 @@ const ViewCertificate = () => {
               Download Certificate
             </Button>
           </div>
-          <div className="w-full flex mt-12">
+          <div className="w-full flex mt-2">
             <div className="w-[500px] ">
               <div className="bg-white border m-2 rounded-lg">
-                <h1 className="flex justify-start items-start ml-4 mt-2 text-blue-400 text-lg font-semibold">
+                <h1 className="flex justify-start items-start ml-4 mt-2 font-bold text-blue-900 text-md ">
                   Issued To
                 </h1>
                 <h2 className="flex justify-center items-center text-xl mt-2 border rounded-lg mx-4 py-2">
@@ -119,7 +118,7 @@ const ViewCertificate = () => {
                 </p>
                 <a
                   href="https://worqhat.com/contact-us"
-                  className="text-blue-500 flex justify-start items-start ml-4 mb-4 w-24"
+                  className="text-blue-900 flex justify-start items-start ml-4 mb-4 w-24"
                 >
                   contact us
                 </a>
@@ -146,7 +145,62 @@ const ViewCertificate = () => {
             </div>
 
             <div className="w-full bg-white border m-2 rounded-lg">
-              <img src={worqhatlogo} alt="worqhat logo" />
+              {/* WorqHat Info */}
+              <div>
+                <div className="flex w-full justify-start text-md mt-4 ml-4 items-center  font-bold text-blue-900">
+                  Issued by
+                </div>
+
+                <div className="flex w-full justify-start text-xl ml-4 my-2 items-center font-semibold ">
+                  WorqHat
+                </div>
+
+                <div className="border-b pb-4 ">
+                  <div className="flex w-full justify-start text-left ml-4">
+                    WorqHat is a powerful and easy-to-use “No-Code drag & drop
+                    Workspace” powered by Generative AI Technologies that lets
+                    you build your own brandable Custom Solutions
+                  </div>
+                </div>
+              </div>
+              {/* end of WorqHat Info */}
+
+              {/* Event Details */}
+              <div>
+                <div className="flex w-full justify-start text-md mt-4 ml-4 items-center font-bold text-blue-900">
+                  Event Details
+                </div>
+
+                <div className="flex w-full justify-start text-xl ml-4 my-2 items-center font-semibold">
+                  {certificateDetails.event}
+                </div>
+
+                <div className="border-b pb-4 ">
+                  <div className="flex w-full justify-start text-left ml-4">
+                    {certificateDetails.eventDetails}
+                  </div>
+                </div>
+              </div>
+              {/* End Event Details */}
+
+              {/* Skills Section */}
+              <div>
+                <div className="flex w-full justify-start text-md mt-4 ml-4 items-center font-bold text-blue-900">
+                  Certificate Awarded for
+                </div>
+                <div className="flex justify-start items-center m-4 space-x-4">
+                  {certificateDetails.skills.split(",").map((skill, index) => (
+                    <Button
+                      key={index}
+                      className="border w-auto rounded-xl shadow-md "
+                      variant={"outline"}
+                    >
+                      {skill}
+                    </Button>
+                  ))}
+                </div>
+              </div>
+              {/* End Skills Section */}
             </div>
           </div>
         </div>

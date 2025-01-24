@@ -48,6 +48,9 @@ export type certificateProps = {
   context: string;
   issueDate: string;
   expiryDate: string;
+  event: string;
+  eventDetails: string;
+  skills: string;
   certificateId: string;
 };
 
@@ -58,10 +61,8 @@ export interface CertificationMailProps {
   senderName: string;
 }
 
-
 export interface CertificateProps {
   certificateRef?: React.RefObject<HTMLDivElement>;
   participant: UserDetails;
   certificateDetails: certificateProps;
 }
-

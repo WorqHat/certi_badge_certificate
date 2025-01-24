@@ -24,6 +24,9 @@ export const storeEvent = async (
       certificateIssueDate: certificateDetails.issueDate,
       certificateExpiryDate: certificateDetails.expiryDate,
       certificateContext: certificateDetails.context,
+      eventName: certificateDetails.event,
+      eventDetails: certificateDetails.eventDetails,
+      skills: certificateDetails.skills,
     };
 
     // Save the award data to Firestore

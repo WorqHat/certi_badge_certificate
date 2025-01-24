@@ -70,7 +70,7 @@ const Preview = () => {
                 onValueChange={(value) => setSelectedParticipant(value)}
                 value={selectedParticipant}
               >
-                <SelectTrigger className="w-[180px]">
+                <SelectTrigger className="w-[380px]">
                   <SelectValue placeholder="Select a Participant" />
                 </SelectTrigger>
                 <SelectContent>
