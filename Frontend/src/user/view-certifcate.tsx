@@ -8,6 +8,7 @@ import worqhatlogo from "@/assets/images/logo-blue.png";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 import { certificateProps } from "@/types/participant";
+import Verification from "@/functions/verification";
 
 const ViewCertificate = () => {
   const { certificateId } = useParams(); // Destructure the certificate ID
@@ -90,7 +91,7 @@ const ViewCertificate = () => {
           <div className="flex flex-col items-center justify-center h-full  rounded-lg">
             <img src={worqhatlogo} alt="worqhat logo" className="h-24 mb-2" />
             <h1 className="text-2xl font-bold mb-4">
-              Certificate of Exellence
+              Acknowledging Your Success 
             </h1>
           </div>
           <div>
@@ -130,14 +131,7 @@ const ViewCertificate = () => {
                 </h1>
                 <p>Issue Date: {certificateDetails.issueDate}</p>
                 <p>Expiration Date: {certificateDetails.expiryDate}</p>
-                <Button
-                  onClick={() => {
-                    window.location.reload();
-                  }}
-                  className="w-full mr-4 bg-blue-950"
-                >
-                  Verify Credentials
-                </Button>
+                <Verification />
                 <p className="text-blue-900 text-xs">
                   ID: {certificateId || certificateDetails.certificateId}
                 </p>
