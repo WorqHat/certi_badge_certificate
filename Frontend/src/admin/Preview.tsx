@@ -37,7 +37,7 @@ const Preview = () => {
           const stored = await storeEvent(participant, certificateDetails);
           if (stored.success) {
             await sendInvitationEmail(
-              certificateDetails,
+              { ...certificateDetails, certificateId: stored.awardId },
               participant,
               "support@worqhat.com",
               "WorqHat"

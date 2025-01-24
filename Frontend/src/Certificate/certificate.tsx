@@ -1,7 +1,6 @@
 import React from "react";
 import "./certificate.css";
 import { CertificateProps } from "@/types/participant";
-import { v4 as uuidv4 } from "uuid";
 import worqhaticon from "@/assets/icon/worqhat-icon.png";
 
 const Certificate: React.FC<CertificateProps> = ({
@@ -30,7 +29,7 @@ const Certificate: React.FC<CertificateProps> = ({
           <p>Expiry Date: {certificateDetails.expiryDate}</p>
         </div>
         <p className="text-xs text-neutral-400">
-          {certificateDetails.certificateId || uuidv4()}
+          {certificateDetails.certificateId }
         </p>
       </div>
     </div>

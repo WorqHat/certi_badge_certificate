@@ -6,7 +6,7 @@ import { v4 as uuidv4 } from "uuid";
 export const storeEvent = async (
   participant: UserDetails,
   certificateDetails: certificateProps
-): Promise<{ success: boolean; message: string }> => {
+): Promise<{ success: boolean; message: string; awardId: string }> => {
   try {
     // Generate a unique ID for the award
     const awardId = uuidv4();
@@ -29,12 +29,17 @@ export const storeEvent = async (
     // Save the award data to Firestore
     await setDoc(awardRef, awardData);
 
-    return { success: true, message: "Award data stored successfully." };
+    return {
+      success: true,
+      message: "Award data stored successfully.",
+      awardId: awardId,
+    };
   } catch (error) {
     console.error("Error storing award data:", error || error);
     return {
       success: false,
       message: `Failed to store award data: ${error || error}`,
+      awardId: "invalid",
     };
   }
 };
