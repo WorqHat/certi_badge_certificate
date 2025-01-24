@@ -14,6 +14,7 @@ import { UserDetails } from "@/types/participant";
 import { Button } from "@/components/ui/button";
 import Loader from "@/Loader/loader";
 import { storeEvent } from "@/database/storeEvent";
+import sendInvitationEmail from "@/functions/send-email";
 
 const Preview = () => {
   const location = useLocation();
@@ -32,9 +33,17 @@ const Preview = () => {
 
       // Use Promise.all to handle the array of promises returned by the map function
       await Promise.all(
-        participants.map((participant: UserDetails) =>
-          storeEvent(participant, certificateDetails)
-        )
+        participants.map(async (participant: UserDetails) => {
+          const stored = await storeEvent(participant, certificateDetails);
+          if (stored.success) {
+            await sendInvitationEmail(
+              certificateDetails,
+              participant,
+              "support@worqhat.com",
+              "WorqHat"
+            );
+          }
+        })
       );
 
       console.log("Certificates issued successfully.");

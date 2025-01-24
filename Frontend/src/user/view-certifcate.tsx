@@ -93,10 +93,6 @@ const ViewCertificate = () => {
             <h1 className="text-2xl font-bold mb-4">
               Certificate of Exellence
             </h1>
-            <Button className="mb-4 bg-blue-950" onClick={downloadCertificate}>
-              {" "}
-              Download Certificate
-            </Button>
           </div>
           <div>
             <Certificate
@@ -104,6 +100,10 @@ const ViewCertificate = () => {
               participant={participant}
               certificateDetails={certificateDetails}
             />
+            <Button className="mt-4 bg-blue-950" onClick={downloadCertificate}>
+              {" "}
+              Download Certificate
+            </Button>
           </div>
           <div className="w-full flex mt-12">
             <div className="w-[500px] ">

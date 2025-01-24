@@ -31,10 +31,8 @@ export interface UserData {
     fileName: string;
   };
   attemptedQuestions?: string[];
-
   interviewsCount: number;
   creditBalance: number;
-
   showQuestion?: boolean;
   totalScore?: number;
 }
@@ -53,8 +51,17 @@ export type certificateProps = {
   certificateId: string;
 };
 
+export interface CertificationMailProps {
+  certificateDetails: certificateProps;
+  participant: UserDetails;
+  senderEmail: string;
+  senderName: string;
+}
+
+
 export interface CertificateProps {
   certificateRef?: React.RefObject<HTMLDivElement>;
   participant: UserDetails;
   certificateDetails: certificateProps;
 }
+
