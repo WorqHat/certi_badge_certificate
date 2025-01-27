@@ -31,10 +31,38 @@ export interface UserData {
     fileName: string;
   };
   attemptedQuestions?: string[];
-
   interviewsCount: number;
   creditBalance: number;
-
   showQuestion?: boolean;
   totalScore?: number;
+}
+
+export type UserDetails = {
+  name: string;
+  email: string;
+};
+
+export type certificateProps = {
+  title: string;
+  subtitle: string;
+  context: string;
+  issueDate: string;
+  expiryDate: string;
+  event: string;
+  eventDetails: string;
+  skills: string;
+  certificateId: string;
+};
+
+export interface CertificationMailProps {
+  certificateDetails: certificateProps;
+  participant: UserDetails;
+  senderEmail: string;
+  senderName: string;
+}
+
+export interface CertificateProps {
+  certificateRef?: React.RefObject<HTMLDivElement>;
+  participant: UserDetails;
+  certificateDetails: certificateProps;
 }
