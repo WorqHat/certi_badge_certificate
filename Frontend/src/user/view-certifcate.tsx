@@ -91,7 +91,7 @@ const ViewCertificate = () => {
           <div className="flex flex-col items-center justify-center h-full  rounded-lg">
             <img src={worqhatlogo} alt="worqhat logo" className="h-24 mb-2" />
             <h1 className="text-2xl font-bold mb-4">
-              Acknowledging Your Success 
+              Acknowledging Your Success
             </h1>
           </div>
           <div>
@@ -118,7 +118,7 @@ const ViewCertificate = () => {
                   Want to report typo or mistake
                 </p>
                 <a
-                  href="https://worqhat.com/contact-us"
+                  href="https://discord.com/invite/KHh9mguKBx"
                   className="text-blue-900 flex justify-start items-start ml-4 mb-4 w-24"
                 >
                   contact us

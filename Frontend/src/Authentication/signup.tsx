@@ -18,12 +18,13 @@ import { Link } from "react-router-dom";
 import { Separator } from "@/components/ui/separator";
 import { createAccount } from "@/functions/create-account";
 import { toast } from "sonner";
-import { render } from "@react-email/render";
+// import { render } from "@react-email/render";
 import Loader from "@/Loader/loader";
 
 import worqhatlogo from "@/assets/images/logo-blue.png";
 import { OTPModal } from "./input-otp-modal";
-import SignupConfirmationEmail from "@/Templates/Mails/signup";
+// import SignupConfirmationEmail from "@/Templates/Mails/signup";
+import { getUserRole } from "@/database/getUserDetails";
 
 // async function sendEmail(to: string, subject: string, html: string) {
 //   try {
@@ -69,11 +70,13 @@ export default function Signup() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
+    onAuthStateChanged(auth, async (user) => {
       console.log(user);
       setIsAuthenticated(!!user);
       if (isAuthenticated) {
-        navigate("/admin-home");
+        const role = await getUserRole(user?.uid || "Anonymous");
+        if (role === "admin") navigate("/admin-home");
+        else navigate("/student-home");
       } else {
         setIsLoading(false);
       }
@@ -124,11 +127,11 @@ export default function Signup() {
         console.log(result.message);
 
         // Render the email
-        const emailHtml = await render(
-          <SignupConfirmationEmail
-            name={name.includes(" ") ? name.split(" ")[0] : name}
-          />
-        );
+        // const emailHtml = await render(
+        //   <SignupConfirmationEmail
+        //     name={name.includes(" ") ? name.split(" ")[0] : name}
+        //   />
+        // );
 
         // Send the email
         // await sendEmail(
@@ -209,15 +212,15 @@ export default function Signup() {
         throw new Error(accountResult.message);
       }
 
-      const emailHtml = await render(
-        <SignupConfirmationEmail
-          name={
-            user.displayName?.includes(" ")
-              ? user.displayName?.split(" ")[0]
-              : user.displayName || ""
-          }
-        />
-      );
+      // const emailHtml = await render(
+      //   <SignupConfirmationEmail
+      //     name={
+      //       user.displayName?.includes(" ")
+      //         ? user.displayName?.split(" ")[0]
+      //         : user.displayName || ""
+      //     }
+      //   />
+      // );
 
       // Send the email
       // if (user.email) {

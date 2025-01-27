@@ -21,6 +21,7 @@ import { BrandingBadge } from "@/components/worqhat-badge";
 import { Icons } from "@/components/icons";
 import worqhatlogo from "@/assets/images/logo-blue.png";
 import Loader from "@/Loader/loader";
+import { getUserRole } from "@/database/getUserDetails";
 
 export default function Signin() {
   const pageTitle = `Tables | Login`;
@@ -34,11 +35,13 @@ export default function Signin() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
+    onAuthStateChanged(auth, async (user) => {
       console.log(user);
       setIsAuthenticated(!!user);
       if (isAuthenticated) {
-        navigate("/admin-home");
+        const role = await getUserRole(user?.uid || "Anonymous");
+        if (role === "admin") navigate("/admin-home");
+        else navigate("/student-home");
       } else {
         setIsLoading(false);
       }
