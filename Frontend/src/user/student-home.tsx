@@ -15,8 +15,8 @@ const StudentHome = () => {
   return (
     <div className="bg-gradient-to-br from-blue-50 to-blue-100 min-h-screen flex items-center justify-center p-6">
       <div className="bg-white shadow-lg rounded-2xl p-8 max-w-lg w-full space-y-6">
-        <h1 className="text-2xl font-semibold text-center text-blue-600">
-          Verify Your Credentials
+        <h1 className="text-2xl font-semibold text-center text-blue-950">
+          Verify Your Credentials 🖼
         </h1>
         <p className="text-gray-600 text-center">
           Enter your Certificate ID below to check the validity of your
