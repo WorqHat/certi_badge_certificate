@@ -59,28 +59,30 @@ const ViewCertificate = () => {
     return <div>Loading your Achievement...</div>;
   }
 
-  const downloadCertificate = async () => {
-    if (certificateRef.current) {
-      // Convert Certificate to Canvas
-      const canvas = await html2canvas(certificateRef.current, {
-        useCORS: true, // To handle cross-origin images
-      });
+ const downloadCertificate = async () => {
+   if (certificateRef.current) {
+     // Convert Certificate to Canvas with higher scale
+     const canvas = await html2canvas(certificateRef.current, {
+       useCORS: true, // To handle cross-origin images
+       scale: 4, // Increase scale for higher resolution
+     }); 
+ 
+     // Get Canvas Dimensions
+     const imgData = canvas.toDataURL("image/png");
+     const canvasWidth = canvas.width;
+     const canvasHeight = canvas.height;
 
-      // Get Canvas Dimensions
-      const imgData = canvas.toDataURL("image/png");
-      const canvasWidth = canvas.width;
-      const canvasHeight = canvas.height;
+     // Initialize jsPDF in Landscape Mode with Dynamic Size
+     const pdf = new jsPDF("landscape", "px", [canvasWidth, canvasHeight]);
 
-      // Initialize jsPDF in Landscape Mode with Dynamic Size
-      const pdf = new jsPDF("landscape", "px", [canvasWidth, canvasHeight]);
+     // Add Canvas Image to PDF
+     pdf.addImage(imgData, "PNG", 0, 0, canvasWidth, canvasHeight);
 
-      // Add Canvas Image to PDF
-      pdf.addImage(imgData, "PNG", 0, 0, canvasWidth, canvasHeight);
+     // Save PDF
+     pdf.save("certificate.pdf");
+   }
+ };
 
-      // Save PDF
-      pdf.save("certificate.pdf");
-    }
-  };
 
   return (
     <div>
